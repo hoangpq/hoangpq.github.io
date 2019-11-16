@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Rust for NDK development - Hoang Phan</title>
+  <meta name="description" content="The following are examples to render
+Fractal image in Android bitmap with Rust."><link rel="stylesheet" href="/css/custom.css"><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Hoang Phan",
+    
+    "url": "\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "\/posts\/rust-ndk\/",
+          "name": "Rust for n d k development"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Rust for NDK development",
+  "description" : "The following are examples to render Fractal image in Android bitmap with Rust.\n",
+  "inLanguage" : "en",
+  "wordCount":  973 ,
+  "datePublished" : "2019-11-16T11:41:46",
+  "dateModified" : "2019-11-16T11:41:46",
+  "image" : "\/",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "\/posts\/rust-ndk\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Rust for NDK development" />
+<meta property="og:description" content="The following are examples to render
+Fractal image in Android bitmap with Rust.">
+<meta property="og:url" content="/posts/rust-ndk/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Hoang Phan" />
+
+  <meta name="twitter:title" content="Rust for NDK development" />
+  <meta name="twitter:description" content="The following are examples to render
+Fractal image in Android bitmap with Rust.">
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.59.1" />
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Hoang Phan"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="/css/highlight.min.css" /><link rel="stylesheet" href="/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Hoang Phan</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Rust for NDK development</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>The following are examples to render
+<a href="https://en.wikipedia.org/wiki/Fractal">Fractal</a> image in Android bitmap with Rust.</p>
+
+<p>In order to do Android development, we’ll need to set up our Android environment.
+First we need to install <a href="https://developer.android.com/studio/index.html">Android Studio</a>. Once Android Studio is installed,
+we’ll need to install the <a href="https://developer.android.com/ndk">NDK</a> (Native Development Kit).</p>
+
+<p><strong>First, create a new Kotlin Android Project for your application</strong>
+<br />
+<em>Open Android Studio and click Start a new Android Studio project on the welcome screen or File | New | New project.</em>
+<img src="/images/kt_step01.png" alt="kt_step01" />
+<br />
+<em>Select an <a href="https://developer.android.com/guide/components/activities/intro-activities">activity</a> that defines the behavior of your application.
+For your first &ldquo;Hello world&rdquo; application, select Empty Activity that just shows a screen, and click Next.</em>
+<img src="/images/kt_step02.png" alt="kt_step01" />
+<br />
+<em>Build and Run project</em>
+<img src="/images/kt_run.png" alt="kt_run" />
+<br />
+<em>Open Android Studio. From the toolbar, go to</em>
+<strong>Android Studio &gt; Preferences &gt; Appearance &amp; Behaviour &gt; Android SDK &gt; SDK Tools.</strong>
+<em>Check the following options for installation and click OK.</em>
+</p>
+
+<pre><code>* Android SDK Tools
+* NDK
+* CMake
+* LLDB
+</code></pre>
+
+<p><em>Once the NDK and associated tools have been installed,
+we need to set a few environment variables,
+first for the SDK path and the second for the NDK path. Set the following env vars</em>
+</p>
+
+<pre><code class="language-bash">export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export NDK_HOME=$ANDROID_HOME/ndk-bundle
+</code></pre>
+
+<p><br />
+<em>If you do not already have Rust installed, we need to do this now. For this we will be using rustup. rustup installs Rust from the official release channels and enables you to easily switch between different release versions. It will be useful to you for all your future Rust development, not just here. rustup can also be used in conjunction with HomeBrew.</em></p>
+
+<pre><code class="language-bash">curl https://sh.rustup.rs -sSf | sh
+</code></pre>
+
+<p><br />
+<em>Create rust project</em></p>
+
+<pre><code class="language-bash">cargo new rust-lib &amp;&amp; cd rust-lib
+</code></pre>
+
+<p><br />
+<em>The next step is to create standalone versions of the NDK for us to compile against.
+We need to do this for each of the architectures we want to compile against.
+We will be using the <code>make_standalone_toolchain.py</code> script inside the main Android NDK in order to do this</em>
+<em>Now let’s create our standalone NDKs. There is no need to be inside the NDK directory once you have created it to do this.</em></p>
+
+<pre><code class="language-bash">mkdir NDK &amp;&amp; cd NDK
+${NDK_HOME}/build/tools/make_standalone_toolchain.py --api 26 --arch arm64 --install-dir arm64
+${NDK_HOME}/build/tools/make_standalone_toolchain.py --api 26 --arch arm --install-dir arm
+${NDK_HOME}/build/tools/make_standalone_toolchain.py --api 26 --arch x86 --install-dir x86
+</code></pre>
+
+<p><br />
+<em>Create a new file, <code>cargo-config.toml</code> This file will tell cargo where to look for the NDKs during cross compilation.
+Add the following content to the file, remembering to replace instances of <code>&lt;project path&gt;</code> with the path to your project directory.</em></p>
+
+<pre><code class="language-bash">[target.aarch64-linux-android]
+ar = &quot;&lt;project path&gt;/rust-lib/NDK/arm64/bin/aarch64-linux-android-ar&quot;
+linker = &quot;&lt;project path&gt;/greetings/NDK/arm64/bin/aarch64-linux-android-clang&quot;
+
+[target.armv7-linux-androideabi]
+ar = &quot;&lt;project path&gt;/rust-lib/NDK/arm/bin/arm-linux-androideabi-ar&quot;
+linker = &quot;&lt;project path&gt;/greetings/NDK/arm/bin/arm-linux-androideabi-clang&quot;
+
+[target.i686-linux-android]
+ar = &quot;&lt;project path&gt;rust-lib/rust-lib/NDK/x86/bin/i686-linux-android-ar&quot;
+linker = &quot;&lt;project path&gt;/greetings/NDK/x86/bin/i686-linux-android-clang&quot;
+</code></pre>
+
+<p><br />
+<em>In order for cargo to see our new SDK’s we need to copy this config file to our .cargo directory like this:</em></p>
+
+<pre><code class="language-bash">cp cargo-config.toml ~/.cargo/config
+</code></pre>
+
+<p><br />
+Let’s go ahead and add our newly created Android architectures to rustup so we can use them during cross compilation:</p>
+
+<pre><code class="language-bash">rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+</code></pre>
+
+<p><br />
+<em>Open <code>rust-lib/Cargo.toml</code> and modify the config.</em></p>
+
+<pre><code class="language-toml">[dependencies]
+[target.'cfg(target_os=&quot;android&quot;)'.dependencies]
+jni = { version = &quot;0.5&quot;, default-features = false }
+
+[lib]
+name = &quot;rust&quot;
+crate-type = [&quot;dylib&quot;]
+</code></pre>
+
+<p><br />
+<em>Open <code>rust-lib/src/lib.rs</code>. At the bottom of the file add the following code:</em></p>
+
+<pre><code class="language-rust">/// Expose the JNI interface for android below
+#[cfg(target_os = &quot;android&quot;)]
+#[allow(non_snake_case)]
+pub mod android {
+    extern crate jni;
+
+    use super::*;
+    use self::jni::JNIEnv;
+    use self::jni::objects::{JString, JClass};
+    use self::jni::sys::jstring;
+    use std::ffi::CString;
+
+    #[no_mangle]
+    pub unsafe extern fn Java_com_example_myktapp_MainActivity_greeting(env: JNIEnv, _: JClass) -&gt; jstring {
+        let world_ptr = CString::new(&quot;Hello world from Rust world&quot;).unwrap();
+        let output = env.new_string(world_ptr.to_str().unwrap()).expect(&quot;Couldn't create java string!&quot;);
+        output.into_inner()
+    }
+}
+</code></pre>
+
+<p><br />
+<em>Build library for Android x86 (Simulator)</em></p>
+
+<pre><code class="language-bash">cargo build --target i686-linux-android --release
+</code></pre>
+
+<p><br />
+<em>Link dynamic library to Android project</em></p>
+
+<pre><code class="language-bash">cd app/src/main
+ln -s &lt;project_path&gt;/rust-lib/target/i686-linux-android/release/librust.so jniLibs/x86/librust.so
+</code></pre>
+
+<p><br />
+<em>Edit layout <code>activity_main.xml</code> to add id for TextView</em></p>
+
+<pre><code class="language-xml">&lt;TextView
+        android:id=&quot;@+id/txtHello&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;Hello World!&quot;
+        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+        app:layout_constraintLeft_toLeftOf=&quot;parent&quot;
+        app:layout_constraintRight_toRightOf=&quot;parent&quot;
+        app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+</code></pre>
+
+<p><br />
+<em>In <code>MainActivity.kt</code> file, add the following code.
+Here we are defining the native interface to our Rust.
+The <code>greeting</code> method simply makes a call to that native function
+<code>Java_com_example_myktapp_MainActivity_greeting</code></em></p>
+
+<pre><code class="language-java">private external fun greeting(): String
+</code></pre>
+
+<p><br />
+<em>We need to call function to get message from Rust
+and load our Rust library</em></p>
+
+<pre><code class="language-java">class MainActivity : AppCompatActivity() {
+
+    private external fun greeting(): String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val textView: TextView = findViewById(R.id.txtHello)
+        textView.text = greeting()
+    }
+
+    companion object {
+        init {
+            System.loadLibrary(&quot;rust&quot;)
+        }
+    }
+
+}
+</code></pre>
+
+<p><br />
+<em>Build and run project again</em>
+<img src="/images/kt_run_rust.png" alt="kt_run" />
+<br />
+<em>Edit layout <code>main_activity.xml</code> to add <code>BitmapView</code></em></p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/imageView&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+        app:layout_constraintLeft_toLeftOf=&quot;parent&quot;
+        app:layout_constraintRight_toRightOf=&quot;parent&quot;
+        app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
+</code></pre>
+
+<p><br />
+<em>In <code>MainActivity.kt</code> file, add the following code.
+Here we are defining the native interface to our Rust.
+The <code>renderFractal</code> method simply makes a call to that native function
+and create new <code>Bitmap</code> that will be modified by the native function</em></p>
+
+<pre><code class="language-java">package com.example.myktapp
+
+import android.graphics.Bitmap
+import android.os.Bundle
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private external fun renderFractal(bitmap: Bitmap)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888)
+        renderFractal(bitmap)
+        val imageView: ImageView = findViewById(R.id.imageView)
+        imageView.setImageBitmap(bitmap)
+    }
+
+    companion object {
+        init {
+            System.loadLibrary(&quot;rust&quot;)
+        }
+    }
+
+}
+</code></pre>
+
+<p><br />
+<em>Open <code>rust-lib/Cargo.toml</code> and add <a href="https://docs.rs/image/0.22.3/image/"><code>image</code></a> and <a href="https://github.com/rust-num/num-complex"><code>num-complex</code></a> crate to dependencies</em></p>
+
+<pre><code class="language-toml">[dependencies]
+[target.'cfg(target_os=&quot;android&quot;)'.dependencies]
+jni = { version = &quot;0.5&quot;, default-features = false }
+image = &quot;0.22.0&quot;
+num-complex = &quot;0.2&quot;
+</code></pre>
+
+<p><br />
+<em>Open <code>rust-lib/lib.rs</code> and add the following code inside <code>android</code> mod,
+<code>graphic</code> mod just a Rust port of <a href="https://developer.android.com/ndk/reference/group/bitmap">NDK C++ Bitmap header</a>,
+you can find the code for <code>fractal::render</code> on <a href="https://github.com/hoangpq/rust-ndk-example/blob/master/rust-lib/src/android/fractal.rs">fractal.rs</a></em></p>
+
+<pre><code class="language-rust">#[no_mangle]
+pub unsafe extern fn Java_com_example_myktapp_MainActivity_renderFractal(env: JNIEnv, _: JClass, bmp: JObject) {
+    let mut info = graphic::AndroidBitmapInfo::new();
+    let raw_env = env.get_native_interface();
+
+    let bmp = bmp.into_inner();
+
+    // Read bitmap info
+    graphic::bitmap_get_info(raw_env, bmp, &amp;mut info);
+    let mut pixels = 0 as *mut c_void;
+
+    // Lock pixel for draw
+    graphic::bitmap_lock_pixels(raw_env, bmp, &amp;mut pixels);
+
+    let pixels =
+        std::slice::from_raw_parts_mut(pixels as *mut u8, (info.stride * info.height) as usize);
+
+    fractal::render(pixels, info.width as u32, info.height as u32);
+    graphic::bitmap_unlock_pixels(raw_env, bmp);
+}
+</code></pre>
+
+<p><br />
+<em>Build and run project again</em>
+<img src="/images/kt_run_bitmap.png" alt="kt_run" />
+</p>
+
+<p><a href="https://github.com/hoangpq/rust-ndk-example"><strong>Find the code</strong></a></p>
+
+<p><strong>References</strong><br />
+- <a href="https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html">Rust on Android</a><br />
+- <a href="https://github.com/image-rs/image/blob/master/examples/fractal.rs">Fractal example</a></p>
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="/">Hoang Phan</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.59.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="/js/main.js"></script>
+<script src="/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
